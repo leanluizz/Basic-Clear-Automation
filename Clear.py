@@ -7,15 +7,6 @@ def Clear():
     pyautogui.press("enter", interval=1.25)
     time.sleep(1)
 
-    pyautogui.press("win", interval=0.25)
-    pyautogui.write("update")
-    pyautogui.press("enter", interval=1.25)
-
-    att = pyautogui.locateCenterOnScreen("att.PNG")
-    pyautogui.moveTo(att)
-    pyautogui.click()
-    time.sleep(1)
-
 
     pyautogui.press("enter", interval=1.25)
     pyautogui.hotkey("win", interval=0.25)
@@ -29,8 +20,6 @@ def Clear():
     pyautogui.press("enter", interval=1.25)
     imageSecond = pyautogui.locateCenterOnScreen("chromebuttonsettings.PNG")
     imageHardware = pyautogui.locateCenterOnScreen("chromebuttonsettingshardware.PNG")
-    pyautogui.alert(title="RPA-ClearCache", text="Aguarde os ajustes", button="Ok")
-    pyautogui.press("enter")
     pyautogui.moveTo(imageSecond)
     pyautogui.click()
     time.sleep(1)
@@ -49,15 +38,19 @@ def Clear():
     pyautogui.write("edge://settings/system", interval=0.10)
     pyautogui.press("enter", interval=1.25)
     edgesettings = pyautogui.locateCenterOnScreen("edgebuttonsettings.PNG")
-    pyautogui.alert(title="RPA-ClearCache", text="Aguarde os ajustes", button="Ok")
-    pyautogui.press("enter")
     pyautogui.moveTo(edgesettings)
-    pyautogui.click()
+    pyautogui.click(edgesettings)
     time.sleep(2)
 
     edgehardware = pyautogui.locateCenterOnScreen("edgebuttonhardware.PNG")
     pyautogui.moveTo(edgehardware)
-    pyautogui.click()
+    pyautogui.click(edgehardware)
+    time.sleep(2)
+
+    reniciarEdge = pyautogui.locateCenterOnScreen("reiniciarEdge.PNG")
+    pyautogui.moveTo(reniciarEdge)
+    pyautogui.click(reniciarEdge)
+    time.sleep(2)
 
     pyautogui.hotkey("win", interval=0.25)
     pyautogui.write("powershell")
@@ -109,11 +102,20 @@ def Clear():
     while i <= 2:
         pyautogui.press("esc")
         i += 1
-        pyautogui.hotkey("win", "P", interval=0.25)
-        pyautogui.press("End")
-        pyautogui.press("Up")
-        pyautogui.press("enter", interval=1.25)
-        pyautogui.press("esc")
+    pyautogui.hotkey("win", "P", interval=0.25)
+    pyautogui.press("End")
+    pyautogui.press("Up")
+    pyautogui.press("enter", interval=1.25)
+    pyautogui.press("esc")
+    pyautogui.press("win", interval=0.25)
+    pyautogui.write("update")
+    pyautogui.press("enter", interval=1.25)
+    time.sleep(5)
+    att = pyautogui.locateCenterOnScreen("att.PNG")
+    pyautogui.moveTo(att)
+    pyautogui.click()
+    time.sleep(1)
+
 c = pyautogui.confirm(text="Pode demorar um pouco, clique em `Limpar` para iniciar a automação", title="RPA-ClearCache", buttons=["Limpar", "Cancelar"])
 if c == "Limpar":
     Clear()

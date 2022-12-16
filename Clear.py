@@ -1,8 +1,26 @@
 import pyautogui
 import time 
 import os
+import re
 
-def Clear():
+list_path = ['C:\WindowszPrefetch', 'C:\Windows\Temp', os.getenv('temp')]
+list_taskkill = 'taskkill /F /FI "STATUS ne Running"'
+
+def clear_data(Locate):
+    for raiz, diretorios, arquivos in os.walk(Locate):
+        for arquivo in arquivos:
+            try:
+                os.remove(os.path.join(raiz, arquivo))
+                print(arquivo + "Ok")
+            except:
+                print(arquivo + 'ERRO')
+
+for i in list_path:
+    clear_data(i)
+
+os.system(list_taskkill)
+
+def Update_Win():
     pyautogui.hotkey("win", "P", interval=0.25)
     pyautogui.press("Home")
     pyautogui.press("enter", interval=1.25)
@@ -22,8 +40,11 @@ def Clear():
     pyautogui.press("esc")
 
     pyautogui.alert(text="Espere a atualização terminar e depois reinicie o computador", button="Ok")
-c = pyautogui.confirm(text="Pode demorar um pouco, clique em `Limpar` para iniciar a automação", title="RPA-ClearCache", buttons=["Limpar", "Cancelar"])
+c = pyautogui.confirm(text="Pode demorar um pouco, por favor antes de iniciar feche TODAS as suas janelas abertas, clique em `Limpar` para iniciar a automação", title="RPA-ClearCache", buttons=["Limpar", "Cancelar"])
 if c == "Limpar":
-    Clear()
+    clear_data()
+    Update_Win()
 else:
     pyautogui.alert(title="RPA-ClearCache", text="Volte quando máquina estiver lenta", button="Ok")
+
+exit()

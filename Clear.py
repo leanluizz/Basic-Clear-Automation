@@ -1,12 +1,73 @@
 import pyautogui
 import time 
 import os
-import re
 
+user = os.getlogin()
 list_path = ['C:\WindowszPrefetch', 'C:\Windows\Temp', os.getenv('temp')]
-list_taskkill = 'taskkill /F /FI "STATUS ne Running"'
+list_taskkill = 'taskkill /FI "IMAGENAME ne powershell.exe"'
+os.system(list_taskkill)
+
+def config_chrome():
+    pyautogui.press("win", interval=0.25)
+    pyautogui.write("chrome", interval=0.25)
+    pyautogui.press("Enter", interval=0.25)
+    pyautogui.write("chrome://settings/reset", interval=0.25)
+    pyautogui.press("Enter")
+    pyautogui.press("Tab", presses=8, interval=0.25)
+    pyautogui.press("Enter")
+    time.sleep(5)
+    pyautogui.hotkey("Alt", "F4")
+    pyautogui.press("win")
+    pyautogui.write("chrome", interval=0.25)
+    pyautogui.press("Enter", interval=0.25)
+    pyautogui.write("chrome://settings/cleanup", interval=0.20)
+    pyautogui.press("Enter")
+    pyautogui.press("Tab", presses=9, interval=0.25)
+    pyautogui.press("Enter")
+
+def clear_config():
+    pyautogui.press("win")
+    pyautogui.write("configura", interval=0.50)
+    pyautogui.press("Enter", interval=1.25)
+    pyautogui.press("Tab", interval=1.25)
+    pyautogui.press("Enter", interval=1.25)
+    pyautogui.press("Tab", interval=1.25)
+    pyautogui.press("Down", presses=5)
+    pyautogui.press("Enter", interval=1.25)
+    key = 0
+    while key <= 4:
+        pyautogui.press("Tab")
+        key += 1
+    pyautogui.press("Enter", interval=5.0)
+    pyautogui.press("Tab", presses=2)
+    pyautogui.press("Enter")
+    time.sleep(3)
+    pyautogui.hotkey("Alt", "F4")
+
+def clear_downloads():
+    pyautogui.hotkey("win", "r")
+    pyautogui.write("cmd", interval=0.25)
+    pyautogui.press("Enter")
+    key = 0
+    while key < 2:
+        pyautogui.write("cd ..")
+        pyautogui.press("Enter")
+        key +=1
+    pyautogui.write("cd Users", interval=0.25)
+    pyautogui.press("Enter")
+    pyautogui.write("cd %s"%(user), interval=0.25)
+    pyautogui.press("Enter")
+    pyautogui.write("cd Downloads", interval=0.25)
+    pyautogui.press("Enter")
+    pyautogui.write("del /F *", interval=0.25)
+    pyautogui.press("Enter")
+    pyautogui.write("S", interval=5)
+    pyautogui.press("Enter")
+    pyautogui.write("exit")
+    pyautogui.press("Enter")
 
 def clear_data(Locate):
+
     for raiz, diretorios, arquivos in os.walk(Locate):
         for arquivo in arquivos:
             try:
@@ -14,35 +75,18 @@ def clear_data(Locate):
                 print(arquivo + "Ok")
             except:
                 print(arquivo + 'ERRO')
-
-for i in list_path:
-    clear_data(i)
-
-os.system(list_taskkill)
-
 def Update_Win():
-    pyautogui.hotkey("win", "P", interval=0.25)
-    pyautogui.press("Home")
-    pyautogui.press("enter", interval=1.25)
-    time.sleep(1)
+    os.system("python WinUpdate.py")
 
-    pyautogui.press("win", interval=0.25)
-    pyautogui.write("update")
-    pyautogui.press("enter", interval=1.25)
-    att = pyautogui.locateCenterOnScreen("att.PNG")
-    pyautogui.moveTo(att)
-    pyautogui.click()
-    time.sleep(1)
-    pyautogui.hotkey("win", "P", interval=0.25)
-    pyautogui.press("End")
-    pyautogui.press("Up")
-    pyautogui.press("enter", interval=1.25)
-    pyautogui.press("esc")
+pyautogui.alert(text="Por favor antes de iniciar feche TODAS as suas janelas abertas", button="Ok")
+c = pyautogui.confirm(text="Pode demorar um pouco, clique em `Limpar` para iniciar a automação", title="RPA-ClearCache", buttons=["Limpar", "Cancelar"])
 
-    pyautogui.alert(text="Espere a atualização terminar e depois reinicie o computador", button="Ok")
-c = pyautogui.confirm(text="Pode demorar um pouco, por favor antes de iniciar feche TODAS as suas janelas abertas, clique em `Limpar` para iniciar a automação", title="RPA-ClearCache", buttons=["Limpar", "Cancelar"])
 if c == "Limpar":
-    clear_data()
+    config_chrome()
+    clear_downloads()
+    clear_config()
+    for i in list_path:
+       clear_data(i)
     Update_Win()
 else:
     pyautogui.alert(title="RPA-ClearCache", text="Volte quando máquina estiver lenta", button="Ok")

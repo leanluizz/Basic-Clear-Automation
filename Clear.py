@@ -9,7 +9,9 @@ os.system(list_taskkill)
 
 def config_chrome():
     pyautogui.press("win", interval=0.25)
-    pyautogui.write("chrome", interval=0.25)
+    pyautogui.write("cmd", interval=0.25)
+    pyautogui.press("Enter", interval=0.25)
+    pyautogui.write("start chrome.exe", interval=0.25)
     pyautogui.press("Enter", interval=0.25)
     pyautogui.write("chrome://settings/reset", interval=0.25)
     pyautogui.press("Enter")
@@ -83,11 +85,11 @@ c = pyautogui.confirm(text="Pode demorar um pouco, clique em `Limpar` para inici
 
 if c == "Limpar":
     config_chrome()
-    clear_downloads()
-    clear_config()
-    for i in list_path:
-       clear_data(i)
-    Update_Win()
+    #clear_downloads()
+    #clear_config()
+    #for i in list_path:
+       #clear_data(i)
+    #Update_Win()
 else:
     pyautogui.alert(title="RPA-ClearCache", text="Volte quando máquina estiver lenta", button="Ok")
 

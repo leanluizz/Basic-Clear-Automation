@@ -27,25 +27,6 @@ def config_chrome():
     pyautogui.press("Tab", presses=9, interval=0.25)
     pyautogui.press("Enter")
 
-def clear_config():
-    pyautogui.press("win")
-    pyautogui.write("configura", interval=0.50)
-    pyautogui.press("Enter", interval=1.25)
-    pyautogui.press("Tab", interval=1.25)
-    pyautogui.press("Enter", interval=1.25)
-    pyautogui.press("Tab", interval=1.25)
-    pyautogui.press("Down", presses=5)
-    pyautogui.press("Enter", interval=1.25)
-    key = 0
-    while key <= 4:
-        pyautogui.press("Tab")
-        key += 1
-    pyautogui.press("Enter", interval=5.0)
-    pyautogui.press("Tab", presses=2)
-    pyautogui.press("Enter")
-    time.sleep(3)
-    pyautogui.hotkey("Alt", "F4")
-
 def clear_downloads():
     pyautogui.hotkey("win", "r")
     pyautogui.write("cmd", interval=0.25)
@@ -85,11 +66,10 @@ c = pyautogui.confirm(text="Pode demorar um pouco, clique em `Limpar` para inici
 
 if c == "Limpar":
     config_chrome()
-    #clear_downloads()
-    #clear_config()
-    #for i in list_path:
-       #clear_data(i)
-    #Update_Win()
+    clear_downloads()
+    for i in list_path:
+       clear_data(i)
+    Update_Win()
 else:
     pyautogui.alert(title="RPA-ClearCache", text="Volte quando máquina estiver lenta", button="Ok")
 

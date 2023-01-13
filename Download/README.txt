@@ -8,4 +8,14 @@ Passo 3 - No PowerShell, digite python e de enter
 
 Passo 4 - Aguarde a instalação do Python 
 
-Passo 5 - no PowerShell digite pip install -update pip 
+Passo 5 - No PowerShell digite pip install -update pip  e de enter
+
+Passo 6 - No PowerShell digite pip install pyautogui e de enter
+
+Passo 7 - No PowerShell digite pip install pillow e de enter 
+
+-------------------------------------------------------Inicie a automação---------------------------------------------------------
+
+! Mude até o direotório/pasta do RPA-ClearCache-principal !
+
+No Powershell digite python Clear.py

@@ -1,11 +1,17 @@
 import pyautogui
 import time 
 import os
+import sys
 
-user = os.getlogin()
 list_path = ['C:\WindowszPrefetch', 'C:\Windows\Temp', os.getenv('temp')]
 list_taskkill = 'taskkill /FI "IMAGENAME ne powershell.exe"'
-os.system(list_taskkill)
+os.system(list_taskkill) # Fecha todas as guias
+
+def StopServices():
+    os.system("net stop sysmain")
+    os.system("net stop XboxNetApiSvc")
+    os.system("net stop XboxGipSvc")
+    os.system(0)
 
 def clear_downloads():
     pyautogui.hotkey("win", "r")
@@ -14,20 +20,11 @@ def clear_downloads():
     pyautogui.press("Enter")
     time.sleep(2)
     pyautogui.click(x=500, y=500)
-    key = 0
-    while key < 2:
-        pyautogui.write("cd ..")
-        pyautogui.press("Enter")
-        key +=1
-    pyautogui.write("cd Users", interval=0.25)
-    pyautogui.press("Enter")
-    pyautogui.write("cd %s"%(user), interval=0.25)
-    pyautogui.press("Enter")
     pyautogui.write("cd Downloads", interval=0.25)
     pyautogui.press("Enter")
     pyautogui.write("del /F *", interval=0.25)
     pyautogui.press("Enter")
-    pyautogui.write("S", interval=5)
+    pyautogui.press("S", interval=5)
     pyautogui.press("Enter")
     pyautogui.write("exit")
     pyautogui.press("Enter")
@@ -47,15 +44,27 @@ def Update_Win():
 pyautogui.alert(text="Por favor antes de iniciar feche TODAS as suas janelas abertas", button="Ok")
 c = pyautogui.confirm(text="Pode demorar um pouco, clique em `Limpar` para iniciar a automação", title="RPA-ClearCache", buttons=["Limpar", "Cancelar"])
 
-if c == "Limpar":
-    clear_downloads()
-    for i in list_path:
-       clear_data(i)
-    Update_Win()
-    os.system("sfc /scannow")
-    time.sleep(600)
-    os.system("chkdsk")
-else:
-    pyautogui.alert(title="RPA-ClearCache", text="Volte quando máquina estiver lenta", button="Ok")
+def Init ():
+    if c == "Limpar":
+        clear_downloads()
+        for i in list_path:
+            clear_data(i)
+        Update_Win()
+        StopServices()
+        os.system("sfc /scannow")
+        print("Aguarde enquanto preparamos pra analisar seu HD interno")
+        os.system("chkdsk")
+        print("Disco verificado")
+        pyautogui.write("exit")
+        pyautogui.press("Enter")
+    else:
+        pyautogui.alert(title="RPA-ClearCache", text="Volte quando máquina estiver lenta", button="Ok")
 
+def WinVersion():
+    if str(sys.getwindowsversion().major) == "10":
+        Init()
+    else:
+        pyautogui.alert(title="Erro de versão", text="Não foi possível concluir a automação pois a versão do seu Sistema Operacional é Windows %s" % sys.getwindowsversion().major)
+
+WinVersion()
 exit()

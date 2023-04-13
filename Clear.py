@@ -11,8 +11,7 @@ def StopServices():
     os.system("net stop sysmain")
     os.system("net stop XboxNetApiSvc")
     os.system("net stop XboxGipSvc")
-    os.system(0)
-
+    
 def clear_downloads():
     pyautogui.hotkey("win", "r")
     pyautogui.write("cmd", interval=0.25)
@@ -41,9 +40,6 @@ def clear_data(Locate):
 def Update_Win():
     os.system("python WinUpdate.py")
 
-pyautogui.alert(text="Por favor antes de iniciar feche TODAS as suas janelas abertas", button="Ok")
-c = pyautogui.confirm(text="Pode demorar um pouco, clique em `Limpar` para iniciar a automação", title="RPA-ClearCache", buttons=["Limpar", "Cancelar"])
-
 def Init ():
     if c == "Limpar":
         clear_downloads()
@@ -61,10 +57,13 @@ def Init ():
         pyautogui.alert(title="RPA-ClearCache", text="Volte quando máquina estiver lenta", button="Ok")
 
 def WinVersion():
-    if str(sys.getwindowsversion().major) == "10":
+    win = str(sys.getwindowsversion().major)
+    if win == "10":
         Init()
     else:
         pyautogui.alert(title="Erro de versão", text="Não foi possível concluir a automação pois a versão do seu Sistema Operacional é Windows %s" % sys.getwindowsversion().major)
 
+pyautogui.alert(text="Por favor antes de iniciar feche TODAS as suas janelas abertas", button="Ok")
+c = pyautogui.confirm(text="Pode demorar um pouco, clique em `Limpar` para iniciar a automação", title="RPA-ClearCache", buttons=["Limpar", "Cancelar"])
 WinVersion()
 exit()

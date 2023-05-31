@@ -40,6 +40,11 @@ def clear_data(Locate):
 def Update_Win():
     os.system("python WinUpdate.py")
 
+def Off():
+    pyautogui.hotkey("win", "r")
+    pyautogui.write("shutdown -r")
+    pyautogui.press("Enter")
+
 def Init ():
     if c == "Limpar":
         clear_downloads()
@@ -53,6 +58,7 @@ def Init ():
         print("Disco verificado")
         pyautogui.write("exit")
         pyautogui.press("Enter")
+        Off()
     else:
         pyautogui.alert(title="RPA-ClearCache", text="Volte quando máquina estiver lenta", button="Ok")
 

@@ -41,6 +41,7 @@ def Update_Win():
     os.system("python WinUpdate.py")
 
 def Off():
+    pyautogui.alert(title="PC ira reiniciar em 1 minuto" button="Ok")
     pyautogui.hotkey("win", "r")
     pyautogui.write("shutdown -r")
     pyautogui.press("Enter")

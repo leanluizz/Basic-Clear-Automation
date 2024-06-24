@@ -8,7 +8,7 @@ list_taskkill = 'taskkill /FI "IMAGENAME ne powershell.exe"'
 os.system(list_taskkill) # Fecha todas as guias
 
 def StopServices():
-    os.system("net stop sysmain")
+    os.system("net start sysmain")
     os.system("net stop XboxNetApiSvc")
     os.system("net stop XboxGipSvc")
     
